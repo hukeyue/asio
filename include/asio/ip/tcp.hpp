@@ -49,6 +49,12 @@ public:
   /// The type of a TCP endpoint.
   typedef basic_endpoint<tcp> endpoint;
 
+  /// Construct to represent the Unspec TCP protocol.
+  static tcp unspec() noexcept
+  {
+    return tcp(ASIO_OS_DEF(AF_UNSPEC));
+  }
+
   /// Construct to represent the IPv4 TCP protocol.
   static tcp v4() noexcept
   {
