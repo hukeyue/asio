@@ -121,7 +121,7 @@ inline void* aligned_new(std::size_t align, std::size_t size)
     asio::detail::throw_exception(ex);
   }
   return ptr;
-#elif defined(ASIO_MSVC)
+#elif defined(ASIO_MSVC) || defined(__MINGW32__)
   align = (align < ASIO_DEFAULT_ALIGN) ? ASIO_DEFAULT_ALIGN : align;
   size = (size % align == 0) ? size : size + (align - size % align);
   void* ptr = _aligned_malloc(size, align);
@@ -143,7 +143,7 @@ inline void aligned_delete(void* ptr)
   std::free(ptr);
 #elif defined(ASIO_HAS_BOOST_ALIGN)
   boost::alignment::aligned_free(ptr);
-#elif defined(ASIO_MSVC)
+#elif defined(ASIO_MSVC) || defined(__MINGW32__)
   _aligned_free(ptr);
 #else // defined(ASIO_MSVC)
   ::operator delete(ptr);
